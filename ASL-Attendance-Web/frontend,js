@@ -1,0 +1,59 @@
+// frontend.js
+
+// Handle login action
+document.getElementById("login-btn").addEventListener("click", () => {
+  const nameInput = document.getElementById("name").value.trim();
+  const passcodeInput = document.getElementById("passcode").value.trim();
+
+  // Call the backend function to validate login and get employee data
+  const employee = checkLogin(nameInput, passcodeInput);
+
+  if (employee) {
+    currentEmployee = employee;
+    document.getElementById("form-area").classList.add("hidden");
+    document.getElementById("action-area").classList.remove("hidden");
+    document.getElementById("display-name").textContent = currentEmployee.name;
+
+    // Enable/disable buttons based on time-in status
+    document.getElementById("time-in-btn").disabled = currentEmployee.hasTimeInToday;
+    document.getElementById("time-out-btn").disabled = !currentEmployee.hasTimeInToday;
+  } else {
+    alert("Invalid name or passcode.");
+  }
+});
+
+// Handle Time In button click
+document.getElementById("time-in-btn").addEventListener("click", () => {
+  const timeIn = new Date().toLocaleTimeString();
+  currentEmployee.hasTimeInToday = true;
+
+  // Update the output
+  document.getElementById("output").classList.remove("hidden");
+  document.getElementById("output").innerHTML = `
+    <strong>${currentEmployee.name}</strong><br>
+    Time In: ${timeIn}
+  `;
+
+  // Call the backend to record time in
+  recordTimeIn(currentEmployee.name, timeIn);
+
+  // Disable buttons after time-in
+  document.getElementById("time-in-btn").disabled = true;
+  document.getElementById("time-out-btn").disabled = false;
+});
+
+// Handle Time Out button click
+document.getElementById("time-out-btn").addEventListener("click", () => {
+  const timeOut = new Date().toLocaleTimeString();
+
+  // Update the output with time-out
+  document.getElementById("output").classList.remove("hidden");
+  document.getElementById("output").innerHTML += `<br>Time Out: ${timeOut}`;
+
+  // Call the backend to record time out
+  recordTimeOut(currentEmployee.name, timeOut);
+
+  // Disable buttons after time-out
+  document.getElementById("time-in-btn").disabled = true;
+  document.getElementById("time-out-btn").disabled = true;
+});

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="frontend.js" defer></script>
+  <script src="backend.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Attendance Tracker</h1>
+
+    <div id="form-area">
+      <div class="input-group">
+        <label for="name">Employee Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+      </div>
+      
+      <div class="input-group">
+        <label for="passcode">Passcode</label>
+        <input type="password" id="passcode" placeholder="Enter your passcode">
+      </div>
+      
+      <button id="login-btn">Login</button>
+    </div>
+
+    <div id="action-area" class="hidden">
+      <p id="display-name"></p>
+
+      <button id="time-in-btn" disabled>Time In</button>
+      <button id="time-out-btn" disabled>Time Out</button>
+    </div>
+
+    <div id="output" class="hidden">
+      <!-- Output will be shown here -->
+    </div>
+  </div>
+</body>
+</html>
